@@ -14,7 +14,7 @@ defmodule EctoCassandra.Integration.TypesTest do
     integer  = 1
     float    = 0.1
     title    = "types test"
-    uuid     = "00010203-0405-0607-0809-0a0b0c0d0e0f"
+    uuid     = "11314564-6a9a-444d-937e-6aa257d7a064"
     boolean  = true
     datetime = ~N[2014-01-16 20:26:51.000]
 

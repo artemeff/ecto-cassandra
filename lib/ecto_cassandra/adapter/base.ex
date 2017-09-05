@@ -74,11 +74,12 @@ defmodule EctoCassandra.Adapter.Base do
 
       def autogenerate(_), do: nil
 
+      def dumpers(:binary_id, type), do: [type, EctoCassandra.UUID]
       def dumpers(:utc_datetime, _type), do: [&to_naive/1]
       def dumpers(:naive_datetime, _type), do: [&to_naive/1]
       def dumpers(_primitive, type), do: [type]
 
-      def loaders(:binary_id, type), do: [&load_uuid/1, type]
+      def loaders(:binary_id, type), do: [EctoCassandra.UUID, type]
       def loaders(:utc_datetime, _type), do: [&to_datetime/1]
       def loaders(:naive_datetime, _type), do: [&to_naive/1]
       def loaders(_primitive, type), do: [type]
@@ -105,8 +106,6 @@ defmodule EctoCassandra.Adapter.Base do
         |> Enum.zip(row)
         |> Enum.map(fn {field, term} -> process.(field, term, nil) end)
       end
-
-      defp load_uuid(value), do: {:ok, value}
 
       defp to_naive(%NaiveDateTime{} = datetime), do: {:ok, datetime}
       defp to_naive(%DateTime{} = datetime), do: {:ok, DateTime.to_naive(datetime)}
