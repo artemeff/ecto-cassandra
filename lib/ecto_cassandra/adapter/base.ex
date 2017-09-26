@@ -74,12 +74,12 @@ defmodule EctoCassandra.Adapter.Base do
 
       def autogenerate(_), do: nil
 
-      def dumpers(:binary_id, type), do: [type, EctoCassandra.UUID]
+      def dumpers(:binary_id, type), do: [type, Ecto.UUID]
       def dumpers(:utc_datetime, _type), do: [&to_naive/1]
       def dumpers(:naive_datetime, _type), do: [&to_naive/1]
       def dumpers(_primitive, type), do: [type]
 
-      def loaders(:binary_id, type), do: [EctoCassandra.UUID, type]
+      def loaders(:binary_id, type), do: [Ecto.UUID, type]
       def loaders(:utc_datetime, _type), do: [&to_datetime/1]
       def loaders(:naive_datetime, _type), do: [&to_naive/1]
       def loaders(_primitive, type), do: [type]

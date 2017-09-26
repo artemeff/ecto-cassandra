@@ -46,11 +46,11 @@ defmodule EctoCassandra.Integration.RepoTest do
   end
 
   test "insert, update and delete" do
-    post = %Post{title: "insert, update, delete"}
+    post = %Post{title: "insert, update, delete", uuid: UUID.uuid1}
     meta = post.__meta__
 
     assert %Post{} = to_be_updated = TestRepo.insert!(post)
-    changeset = Ecto.Changeset.change(to_be_updated, visits: 10)
+    changeset = Ecto.Changeset.change(to_be_updated, visits: 10, uuid: nil)
     assert {:ok, updated} = TestRepo.update(changeset)
     assert updated.updated_at > updated.inserted_at
 

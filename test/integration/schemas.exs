@@ -27,7 +27,7 @@ defmodule EctoCassandra.Integration.Post do
     field :cost, :decimal
     field :visits, :integer
     field :intensity, :float
-    field :uuid, EctoCassandra.UUID
+    field :uuid, Ecto.UUID
     field :timeuuid, :binary_id
     field :meta, :map
     field :links, {:map, :string}
