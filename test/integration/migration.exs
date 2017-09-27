@@ -28,5 +28,7 @@ defmodule EctoCassandra.Integration.Migration do
       add :ip, :inet
       timestamps()
     end
+
+    execute "CREATE INDEX posts_text_index ON posts (text);"
   end
 end

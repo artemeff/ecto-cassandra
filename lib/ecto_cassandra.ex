@@ -98,9 +98,7 @@ defmodule EctoCassandra do
     ]
   end
 
-  def ddl({command, %Table{} = table, columns})
-  when command in [:create, :create_if_not_exists]
-  do
+  def ddl({command, %Table{} = table, columns}) when command in [:create, :create_if_not_exists] do
     IO.iodata_to_binary [
       "CREATE TABLE ",
       only_when(command == :create_if_not_exists, "IF NOT EXISTS "),
@@ -110,9 +108,7 @@ defmodule EctoCassandra do
     ]
   end
 
-  def ddl({command, %Table{} = table})
-  when command in [:drop, :drop_if_exists]
-  do
+  def ddl({command, %Table{} = table}) when command in [:drop, :drop_if_exists] do
     IO.iodata_to_binary [
       "DROP TABLE ",
       only_when(command == :drop_if_exists, "IF EXISTS "),
@@ -129,9 +125,7 @@ defmodule EctoCassandra do
     ]
   end
 
-  def ddl({command, %Index{} = index})
-  when command in [:create, :create_if_not_exists]
-  do
+  def ddl({command, %Index{} = index}) when command in [:create, :create_if_not_exists] do
     IO.iodata_to_binary [
       "CREATE ",
       only_when(index.using, "CUSTOM "),
@@ -145,15 +139,15 @@ defmodule EctoCassandra do
     ]
   end
 
-  def ddl({command, %Index{} = index})
-  when command in [:drop, :drop_if_exists]
-  do
+  def ddl({command, %Index{} = index}) when command in [:drop, :drop_if_exists] do
     IO.iodata_to_binary [
       "DROP INDEX ",
       only_when(command == :drop_if_exists, "IF EXISTS "),
       index_name(index.name),
     ]
   end
+
+  def ddl(string) when is_binary(string), do: string
 
   def create_keyspace(options) do
     keyspace = Keyword.fetch!(options, :keyspace) || raise ":keyspace is nil in repository configuration"
