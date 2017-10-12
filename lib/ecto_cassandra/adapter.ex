@@ -10,6 +10,7 @@ defmodule EctoCassandra.Adapter do
   @behaviour Ecto.Adapter
   @behaviour Ecto.Adapter.Migration
   @behaviour Ecto.Adapter.Storage
+  @behaviour Ecto.Adapter.Structure
 
   @host_tries 3
 
@@ -68,6 +69,19 @@ defmodule EctoCassandra.Adapter do
       error ->
         {:error, Exception.message(error)}
     end
+  end
+
+  ### Ecto.Adapter.Storage Callbacks ###
+
+  @doc false
+  def structure_dump(default, config) do
+    {:error, "not supported yet"}
+  end
+
+  def structure_load(default, config) do
+    path = config[:dump_path] || Path.join(default, "structure.sql")
+
+    {:ok, path}
   end
 
   ### Ecto.Adapter Callbacks ###
